@@ -1,0 +1,27 @@
+var MyWallet = Blockchain.MyWallet;
+var WalletStore = Blockchain.WalletStore;
+var Spender = Blockchain.Spender;
+var API = Blockchain.API;
+MyWallet.disableLogout(true);
+
+// Set an interval, since logout gets reactived by certain parts of the code
+window.setInterval(function() { MyWallet.disableLogout(true); }, 60000);
+function myListenerFun(eventName, data) {
+    // Handle events
+}
+
+// Register listener function with MyWallet
+MyWallet.addEventListener(myListenerFun);
+var passphrase = MyWallet.generateHDWalletPassphrase();
+
+MyWallet.initializeHDWallet(passphrase, null, null, _successFun, _errorFun);
+var guid = "my-wallet-guid-1234-bcde";
+var pass = "wallet-password";
+var twoFactorCode = null;
+
+MyWallet.fetchWalletJSON(guid, null, null, pass, twoFactorCode,
+    successFun, need2FAfun, wrong2FAfun, otherErrorFun);
+
+// Do stuff with the wallet
+var LegacyAddresses = MyWallet.getLegacyActiveAddresses();
+MyWallet.get_history(_successFun, _errorFun);
